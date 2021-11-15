@@ -101,7 +101,6 @@ float deltaTime;
 float timepassed;
 float speed=225.f;
 
-
 int main()
 {
 	srand(time(NULL));
@@ -147,6 +146,7 @@ int main()
 
 	window.create(sf::VideoMode(((blocksize.x / 8) * 4 * 2)+200+250, (((blocksize.x / 8) * 10 * 2)+10)), "Not A Tetris", sf::Style::Close);
 	window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
+	//window.setFramerateLimit(200);
 	RectangleShape Status_display(Vector2f(170.f, 630.f));
 	Status_display.setFillColor(Color::Transparent);
 	Status_display.setPosition(Vector2f(276.f, 10.f));
@@ -841,11 +841,11 @@ void ReadScore() {
 			high[4].scoretext = read.scoretext;
 		}
 	}
-	for (int i = 0; i < 5; i++) {
+	/*for (int i = 0; i < 5; i++) {
 		cout << i << endl;
 		cout << high[i].score << endl;
 		cout << high[i].name << endl;
 		cout << high[i].scoretext << endl;
-	}
+	}*/
 	fclose(toread);
 }
