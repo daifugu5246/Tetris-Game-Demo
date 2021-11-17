@@ -792,7 +792,7 @@ void Checkgap() {
 	}
 }
 void Itemcheck() {
-	if (totalscore - itemscore == 5 && item == false) {
+	if (totalscore - itemscore == 50 && item == false) {
 		item = true;
 	}
 }
