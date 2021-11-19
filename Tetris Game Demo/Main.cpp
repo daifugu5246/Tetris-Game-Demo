@@ -69,6 +69,17 @@ struct Highscore {
 	bool active;
 }Leaderboard;
 
+struct How {
+	Text Title;
+	Text a;
+	Text s;
+	Text d;
+	Text item;
+	Text color;
+	Text esc;
+	bool active;
+}how;
+
 Sprite color[2][4];
 Sprite bomb;
 Sprite temp_next;
@@ -91,7 +102,7 @@ int numerase = 0;
 bool gameover = false;
 bool item=false;
 bool Gamestart = false;
-char Selection[3] = {'s','h','e'};
+char Selection[4] = {'s','h','l','e'};
 char Nowselect = Selection[0];
 float delay_move = 0;
 float delay_color = 0;
@@ -133,12 +144,14 @@ int main()
 	Text Entername;
 	Text player;
 	String nameinput;
+	Text Howtoplay;
 	score.setFont(font);
 	scoreCount.setFont(font);
 	Gameover.setFont(font);
 	Gamename.setFont(font);
 	Myname.setFont(font);
 	Start.setFont(font);
+	Howtoplay.setFont(font);
 	Highscore.setFont(font);
 	Exit.setFont(font);
 	Entername.setFont(font);
@@ -208,11 +221,17 @@ int main()
 	Start.setOrigin(Vector2f(Start.getGlobalBounds().width / 2, Start.getGlobalBounds().height / 2));
 	Start.setPosition(Vector2f(580.f, 350.f));
 
+	Howtoplay.setCharacterSize(30);
+	Howtoplay.setString("HOW TO PLAY");
+	Howtoplay.setFillColor(Color::White);
+	Howtoplay.setOrigin(Vector2f(Howtoplay.getGlobalBounds().width / 2, Howtoplay.getGlobalBounds().height / 2));
+	Howtoplay.setPosition(Vector2f(580.f, Start.getPosition().y + 50));
+
 	Highscore.setCharacterSize(30);
 	Highscore.setString("HIGH SCORE");
 	Highscore.setFillColor(Color::White);
 	Highscore.setOrigin(Vector2f(Highscore.getGlobalBounds().width / 2, Highscore.getGlobalBounds().height / 2));
-	Highscore.setPosition(Vector2f(580.f, Start.getPosition().y + 50));
+	Highscore.setPosition(Vector2f(580.f, Howtoplay.getPosition().y + 50));
 
 	Exit.setCharacterSize(30);
 	Exit.setString("EXIT");
@@ -229,6 +248,7 @@ int main()
 	player.setCharacterSize(25);
 	player.setFillColor(Color::White);
 	player.setPosition(Vector2f(Entername.getPosition().x-(Exit.getGlobalBounds().width / 2), Entername.getPosition().y+60));
+
 
 	Leaderboard.Title.setFont(font);
 	Leaderboard.Title.setCharacterSize(30);
@@ -299,6 +319,49 @@ int main()
 	Leaderboard.Fifthscore.setFillColor(Color::White);
 	Leaderboard.Fifthscore.setPosition(Vector2f(Leaderboard.scoretitle.getPosition().x, Leaderboard.Fifthname.getPosition().y));
 
+	how.Title.setFont(font);
+	how.Title.setCharacterSize(30);
+	how.Title.setString("How to play");
+	how.Title.setFillColor(Color::White);
+	how.Title.setOrigin(Vector2f(how.Title.getGlobalBounds().width / 2, how.Title.getGlobalBounds().height / 2));
+	how.Title.setPosition(Vector2f(580.f, 220.f));
+
+	how.a.setFont(font);
+	how.a.setString("A : Move left");
+	how.a.setCharacterSize(20);
+	how.a.setFillColor(Color::White);
+	how.a.setPosition(Vector2f(Leaderboard.nametitle.getPosition().x, Leaderboard.nametitle.getPosition().y));
+
+	how.s.setFont(font);
+	how.s.setString("S : Move down");
+	how.s.setCharacterSize(20);
+	how.s.setFillColor(Color::White);
+	how.s.setPosition(Vector2f(Leaderboard.Firstname.getPosition().x, Leaderboard.Firstname.getPosition().y));
+
+	how.d.setFont(font);
+	how.d.setString("D : Move right");
+	how.d.setCharacterSize(20);
+	how.d.setFillColor(Color::White);
+	how.d.setPosition(Vector2f(Leaderboard.Secondname.getPosition().x, Leaderboard.Secondname.getPosition().y));
+
+	how.item.setFont(font);
+	how.item.setString("Lshift : Use item");
+	how.item.setCharacterSize(20);
+	how.item.setFillColor(Color::White);
+	how.item.setPosition(Vector2f(Leaderboard.Thirdname.getPosition().x, Leaderboard.Thirdname.getPosition().y));
+
+	how.color.setFont(font);
+	how.color.setString("Space : Change color");
+	how.color.setCharacterSize(20);
+	how.color.setFillColor(Color::White);
+	how.color.setPosition(Vector2f(Leaderboard.Forthname.getPosition().x, Leaderboard.Forthname.getPosition().y));
+
+	how.esc.setFont(font);
+	how.esc.setString("Esc : Leave the page\n        Stop game");
+	how.esc.setCharacterSize(20);
+	how.esc.setFillColor(Color::White);
+	how.esc.setPosition(Vector2f(Leaderboard.Fifthname.getPosition().x, Leaderboard.Fifthname.getPosition().y));
+
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 4; j++) {
 			color[i][j].setTexture(blockTexture);
@@ -362,36 +425,60 @@ int main()
 			Gamename.setPosition(Vector2f(580.f, 100.f));
 			if (Keyboard::isKeyPressed(Keyboard::Down) && delay_move >= 0.2f && Nowselect == Selection[0]) {
 				Start.setFillColor(Color::White);
-				Highscore.setFillColor(Color::Red);
+				Howtoplay.setFillColor(Color::Red);
+				Highscore.setFillColor(Color::White);
 				Exit.setFillColor(Color::White);
 				Nowselect = Selection[1];
 				delay_move = 0.f;
 			}
 			if (Keyboard::isKeyPressed(Keyboard::Down) && delay_move >= 0.2f && Nowselect == Selection[1]) {
 				Start.setFillColor(Color::White);
+				Howtoplay.setFillColor(Color::White);
+				Highscore.setFillColor(Color::Red);
+				Exit.setFillColor(Color::White);
+				Nowselect = Selection[2];
+				delay_move = 0.f;
+			}
+			if (Keyboard::isKeyPressed(Keyboard::Down) && delay_move >= 0.2f && Nowselect == Selection[2]) {
+				Start.setFillColor(Color::White);
+				Howtoplay.setFillColor(Color::White);
 				Highscore.setFillColor(Color::White);
 				Exit.setFillColor(Color::Red);
+				Nowselect = Selection[3];
+				delay_move = 0.f;
+			}
+			if (Keyboard::isKeyPressed(Keyboard::Up) && delay_move >= 0.2f && Nowselect == Selection[3]) {
+				Start.setFillColor(Color::White);
+				Howtoplay.setFillColor(Color::White);
+				Highscore.setFillColor(Color::Red);
+				Exit.setFillColor(Color::White);
 				Nowselect = Selection[2];
 				delay_move = 0.f;
 			}
 			if (Keyboard::isKeyPressed(Keyboard::Up) && delay_move >= 0.2f && Nowselect == Selection[2]) {
 				Start.setFillColor(Color::White);
-				Highscore.setFillColor(Color::Red);
+				Howtoplay.setFillColor(Color::Red);
+				Highscore.setFillColor(Color::White);
 				Exit.setFillColor(Color::White);
 				Nowselect = Selection[1];
 				delay_move = 0.f;
 			}
 			if (Keyboard::isKeyPressed(Keyboard::Up) && delay_move >= 0.2f && Nowselect == Selection[1]) {
 				Start.setFillColor(Color::Red);
+				Howtoplay.setFillColor(Color::White);
 				Highscore.setFillColor(Color::White);
 				Exit.setFillColor(Color::White);
 				Nowselect = Selection[0];
 				delay_move = 0.f;
 			}
-			if (Keyboard::isKeyPressed(Keyboard::Enter) && Nowselect==Selection[2]) {
+			if (Keyboard::isKeyPressed(Keyboard::Enter) && Nowselect==Selection[3]) {
 				window.close();
 			}
 			if (Keyboard::isKeyPressed(Keyboard::Enter) && Nowselect == Selection[1] && delay_move >= 0.3f) {
+				how.active = true;
+				delay_move = 0.f;
+			}
+			if (Keyboard::isKeyPressed(Keyboard::Enter) && Nowselect == Selection[2] && delay_move >= 0.3f) {
 				Leaderboard.active = true;
 				delay_move = 0.f;
 			}
@@ -419,6 +506,7 @@ int main()
 				for (int i = 0; i < 4; i++) {
 					scorecount[i] = '0';
 				}
+				timepassed = 0;
 				totalscore = 0;
 				itemscore = 0;
 				item = false;
@@ -455,14 +543,24 @@ int main()
 
 			}
 		}
+		if (how.active) {
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape) && delay_move >= 0.2f) {
+				how.active = false;
+				delay_move = 0.f;
+
+			}
+		}
 		if (Gamestart && !nameenter.getname) {
 			timepassed += deltaTime;
+			//cout << timepassed;
+			//cout << " ";
+			//cout << speed << endl;
 			Gamename.setPosition(Vector2f(580.f, 320.f));
 			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
 				Gamestart = false;
 			}
 			if (timepassed < 300) {
-				speed = speed;
+				speed = 225;
 			}
 			else if (timepassed >= 300 && timepassed <= 600) {
 				speed = 280;
@@ -617,8 +715,9 @@ int main()
 		for (size_t i = 0; i < blocks.size(); i++) {
 			window.draw(blocks[i].cube);
 		}
-		if (!Gamestart && !Leaderboard.active) {
+		if (!Gamestart && !Leaderboard.active && !how.active) {
 			window.draw(Start);
+			window.draw(Howtoplay);
 			window.draw(Highscore);
 			window.draw(Exit);
 			if (delay_over >= 0.3f) {
@@ -655,6 +754,15 @@ int main()
 			window.draw(Leaderboard.Forthscore);
 			window.draw(Leaderboard.Fifthname);
 			window.draw(Leaderboard.Fifthscore);
+		}
+		if (how.active) {
+			window.draw(how.Title);
+			window.draw(how.a);
+			window.draw(how.s);
+			window.draw(how.d);
+			window.draw(how.item);
+			window.draw(how.color);
+			window.draw(how.esc);
 		}
 		window.draw(Game_display);
 		window.draw(Next_display);
